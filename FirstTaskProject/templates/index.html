@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
+    <title></title>
+</head>
+<body>
+    <div class="header">Блог</div>
+    <div class="content">
+        <a href="archive">Редактировать</a>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send" >
+        </form>
+        {% if articles.count > 0 %}
+        {% for article in articles %}
+        <form method="POST">
+            {% csrf_token %}
+                <p>{{ article.id }}</p>
+                <p name="title">{{ article.title }}</p>
+                <p name="content">{{ article.content }}</p>
+                <p>{{ article.dateOfCreation }}</p>
+            <input type="submit" value="delete" formaction="delete/{{article.id}}/">
+            <input type="submit" value="archive" formaction="archive/{{article.id}}/">
+            <a href="edit/{{article.id}}/{{ article.title }}/{{ article.content }}">Редактировать</a>
+        </form> 
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

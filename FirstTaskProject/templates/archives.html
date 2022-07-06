@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
+    <title></title>
+</head>
+<body>
+    <div class="header">Блог</div>
+    <div class="content">
+        {% if articles.count > 0 %}
+        {% for article in articles %}
+        <form method="POST">
+            {% csrf_token %}
+                <p>{{ article.id }}</p>
+                <p name="title">{{ article.title }}</p>
+                <p name="content">{{ article.content }}</p>
+                <p>{{ article.dateOfCreation }}</p>
+            <input type="submit" value="delete" formaction="delete/{{article.id}}/">
+        </form> 
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
